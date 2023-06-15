@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SurfButton</title>
+  </head>
+  <body>
+    <div class="Surf">
+      <div>Hover Me</div>
+    </div>
+  </body>
+</html>
+<style>
+  body {
+    background-color: #000;
+  }
+  .Surf {
+    width: 200px;
+    height: 85px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to bottom, skyblue 40%, rgb(81, 117, 131));
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  .Surf div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    user-select: none;
+  }
+
+  .Surf:hover::after {
+    top: -370px;
+    border-radius: 38%;
+    animation-duration: 3s;
+  }
+  .Surf:hover::before {
+    border-radius: 33%;
+    animation-duration: 5s;
+  }
+  .Surf::after {
+    width: 400px;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    content: "";
+    position: absolute;
+    top: -360px;
+    left: -100px;
+    border-radius: 43%;
+    rotate: 45deg;
+    animation: SurfRotate 8s linear infinite;
+  }
+
+  .Surf::before {
+    width: 450px;
+    height: 450px;
+    background-color: rgba(255, 255, 255, 0.3);
+    content: "";
+    position: absolute;
+    top: -405px;
+    left: -120px;
+    border-radius: 35%;
+    animation: SurfRotate 15s linear infinite;
+  }
+
+  @keyframes SurfRotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
