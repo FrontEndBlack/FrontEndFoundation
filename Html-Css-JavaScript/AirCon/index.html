@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="display: flex">
+      <div class="AirCon">
+        <div id="AirCon_led">
+          <b class="temp">26</b>
+          <span class="unit">°C</span>
+        </div>
+        <div class="AirCon_bottom">
+          <div id="AirCon_outPut">
+            <div class="front"></div>
+            <div class="back"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="simulateBtn">
+        <div id="switchBtn">!</div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .AirCon {
+    position: relative;
+    margin: auto;
+    width: 500px;
+    height: 145px;
+    background: linear-gradient(225deg, #fff, #eee);
+    border-radius: 30px 30px 15px 15px;
+    box-shadow: 0px 0px 3px 3px #999;
+    overflow: hidden;
+  }
+  .AirCon_bottom {
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    border-top: 3px solid #989898;
+  }
+  #AirCon_led {
+    position: absolute;
+    right: 40px;
+    top: 30px;
+    display: none;
+  }
+  .showLed {
+    display: block !important;
+  }
+  .temp,
+  .unit {
+    text-shadow: 0px 0px 3px skyblue;
+    color: #32cfff;
+    font-size: 28px;
+  }
+  .unit {
+    font-size: 20px;
+  }
+
+  #AirCon_outPut {
+    width: calc(100% - 60px);
+    height: 100%;
+    transform-style: preserve-3d;
+    position: relative;
+    transition: all 1s;
+    margin: auto;
+  }
+  .front,
+  .back {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateX(0deg);
+    position: absolute;
+  }
+  .back {
+    background-color: #fff;
+    height: 100%;
+    box-shadow: inset 0px 0px 0px 6px #999;
+    transform: rotateX(225deg);
+  }
+  .open {
+    transform: rotateX(-180deg);
+  }
+
+  #simulateBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #ebecf0;
+    box-shadow: 5px 5px 10px rgba(121, 130, 160, 0.55), -5px -5px 10px #fff;
+    transition: box-shadow 0.2s ease-out;
+    user-select: none;
+    margin: auto;
+  }
+
+  .simulateBtnActive {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0),
+      inset 5px 5px 10px rgba(121, 130, 160, 0.55), inset -5px -5px 10px #fff !important;
+    font-weight: 700;
+  }
+
+  #switchBtn {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    border: 3px solid red;
+    border-top-color: transparent !important;
+    color: red;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 10px;
+  }
+  .switchBtnActive {
+    border-color: lawngreen !important;
+    color: lawngreen !important;
+  }
+</style>
+
+<script>
+  const AirCon_outPut = document.querySelector("#AirCon_outPut");
+  const simulateBtn = document.querySelector("#simulateBtn");
+  const switchBtn = document.querySelector("#switchBtn");
+  const AirCon_led = document.querySelector("#AirCon_led");
+
+  let Flag = true;
+  simulateBtn.addEventListener("click", function () {
+    if (Flag) {
+      Flag = false;
+      if (simulateBtn.className == "simulateBtnActive") {
+        // 设置为关闭状态
+        simulateBtn.classList = "";
+        AirCon_led.classList = "";
+        switchBtn.classList = "";
+        AirCon_outPut.classList = "";
+      } else {
+        // 设置为开启状态
+        simulateBtn.classList = "simulateBtnActive";
+        AirCon_led.classList = "showLed";
+        switchBtn.classList = "switchBtnActive";
+        AirCon_outPut.classList = "open";
+      }
+    }
+    setTimeout(() => {
+      Flag = true;
+    }, 1500);
+  });
+</script>
