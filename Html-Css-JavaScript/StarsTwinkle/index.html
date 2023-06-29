@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+  </head>
+  <body></body>
+</html>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    /* 渐变色 */
+    background: linear-gradient(to right bottom, rgb(23, 1, 29), #000);
+  }
+  .star {
+    border-radius: 50%;
+    position: absolute;
+    /* 默认完全透明 */
+    opacity: 0;
+    /* 绑定动画 */
+    animation: flash 2s ease-in-out infinite;
+  }
+
+  /* 闪烁动画 */
+  @keyframes flash {
+    0% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  // 控制生成星星数量
+  let starNum = 200;
+  //   控制星星颜色 相同颜色越多生成概率越高 例如当前共8种颜色，生成#fff的概率为4/8，其他颜色为1/8
+  let randomColorArr = [
+    "#4dadff",
+    "#ff5c91",
+    "#c1687c",
+    "#33b4ff",
+    "#fff",
+    "#fff",
+    "#fff",
+    "#fff",
+  ];
+  // 视口左右内边距
+  let paddingSize = 10;
+
+  let randomSize;
+  const width = document.body.offsetWidth - paddingSize * 2;
+  const height = document.body.offsetHeight - paddingSize * 2;
+  for (let i = 0; i < starNum; i++) {
+    //使用随机数控制星星大小  当前设置 2 - 5px   随机取值
+    randomSize = Math.random() * 3 + 2 + "px";
+    // 创建新元素
+    let star = document.createElement("div");
+    // 新元素设置类名
+    star.className = "star";
+    // 设置随机背景色
+    // star.style.backgroundColor = "#fff";
+    star.style.backgroundColor =
+      randomColorArr[
+        // 随机数向下取整
+        Math.floor(Math.random() * randomColorArr.length)
+      ];
+    // 设置宽、高
+    star.style.width = randomSize;
+    star.style.height = randomSize;
+    // 设置定位左右偏移量 用0-1随机数*宽/高，+padding距离
+    star.style.left = Math.random() * width + paddingSize + "px";
+    star.style.top = Math.random() * height + paddingSize + "px";
+    // 设置动画延时
+    star.style.animationDelay = Math.random() * 3 + 0.5 + "s";
+    // 追加进body中
+    document.body.appendChild(star);
+  }
+</script>
