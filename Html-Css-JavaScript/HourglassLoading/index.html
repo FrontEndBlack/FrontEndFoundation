@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沙漏加载</title>
+  </head>
+  <body>
+    <!-- 沙漏 -->
+    <div class="hourglass">
+      <!-- 杯子上半部分 -->
+      <div class="up"></div>
+      <!-- 杯子下半部分 -->
+      <div class="down"></div>
+    </div>
+  </body>
+</html>
+<style>
+  body {
+    background-color: #000;
+  }
+
+  /* 上下部分公共样式 
+     通过border-radius和旋转完成杯子样式
+  */
+  .up,
+  .down {
+    width: 80px;
+    height: 80px;
+    border: 6px solid #fff;
+    border-radius: 50% 0 0 50%;
+    transform: rotate(-90deg);
+    overflow: hidden;
+  }
+  .down {
+    transform: rotate(90deg);
+    background-color: transparent;
+  }
+
+  /* 沙漏整体 */
+  .hourglass {
+    width: 92px;
+    height: 172px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    animation: hourglassRotate 3s infinite forwards ease-in-out;
+    transform: translate(-50%, -50%);
+  }
+  /*border模拟沙子向下流动 */
+  .hourglass::after {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    animation: lineToDown 3s infinite forwards ease-in-out;
+    border: 1px dashed greenyellow;
+  }
+
+  /* 沙子从上向下移动，慢慢变少 */
+  .up::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: -10%;
+    background-color: #fff;
+    animation: goDown 3s infinite forwards linear;
+  }
+
+  /* 下半部分沙子慢慢变多 */
+  .down::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    background-color: greenyellow;
+    animation: goTop 3s infinite forwards linear;
+  }
+
+  @keyframes lineToDown {
+    0% {
+      height: 50%;
+    }
+    100% {
+      height: 0%;
+    }
+  }
+  /* 20%用来旋转 前80%时间等待沙子完成流动，20%时间用来旋转 */
+  @keyframes hourglassRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    80% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(720deg);
+    }
+  }
+  /* 动画留出20%的时间给主体用来旋转  前80%的时间完成动画，后20%来等待下个周期*/
+  @keyframes goDown {
+    0% {
+      left: 0%;
+    }
+    80% {
+      left: -100%;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+  /* 动画留出20%的时间给主体用来旋转  前80%的时间完成动画，后20%来等待下个周期*/
+  @keyframes goTop {
+    0% {
+      left: 100%;
+    }
+    80% {
+      left: 0%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+</style>
