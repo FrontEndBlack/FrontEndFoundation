@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Realistic 3D</title>
+  </head>
+  <body>
+    <div class="card">
+      <div class="reflection"></div>
+      <img class="img" src="./xk.jpg" />
+      <img class="img2" src="./dep.jpg" />
+    </div>
+
+
+  </body>
+</html>
+
+<style>
+  body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    45deg,
+    #000 20%,
+    #012228 35%,
+    #113242 50%,
+    #011a28 65%,
+    #000 85%
+  );
+}
+
+.card {
+  background-color: #ccc;
+  width: 200px;
+  height: 200px;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+  overflow: hidden;
+  border-radius: 10%;
+}
+.card:hover {
+  transform: scale(2);
+  z-index: 2;
+  box-shadow: 0 0 10px #113242;
+}
+.card:hover img {
+        /* 灰度转换 */
+  filter: grayscale(0);
+}
+.card .reflection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  transition: all 0.1s ease;
+  opacity: 0;
+  /* 混合模式 */
+  mix-blend-mode: soft-light;
+}
+.card img {
+  width: 100%;
+  height: 100%;
+  /* 更改对齐方式 */
+  object-fit: cover;
+  /* 灰度转换 */
+  filter: grayscale(0.65);
+  transition: all 2s ease;
+}
+
+</style>
+
+<script>
+  const reflection = document.querySelector(".reflection");
+  const card = document.querySelector(".card");
+  const img = document.querySelector(".img");
+  const img2 = document.querySelector(".img2");
+
+  card.addEventListener("mouseover", () => {
+    reflection.style.opacity = 1;
+    img.style.display = "none";
+    img2.style.display = "block";
+  });
+
+  card.addEventListener("mouseleave", () => {
+    reflection.style.opacity = 0;
+    img.style.display = "block";
+    img2.style.display = "none";
+    card.style.transform = ` scale(1)`;
+  });
+
+  card.addEventListener("mousemove", () => {
+    const relX = (event.offsetX + 1) / card.offsetWidth;
+    const relY = (event.offsetY + 1) / card.offsetHeight;
+    const rotY = `rotateY(${(relX - 0.5) * 60}deg)`;
+    const rotX = `rotateX(${(relY - 0.5) * -60}deg)`;
+    card.style.transform = `perspective(400px) scale(2) ${rotY} ${rotX}`;
+    reflection.style.backgroundImage = `radial-gradient(
+      circle at ${relX * 100}% ${relY * 100}%,
+      rgb(120 148 240) 10%,
+      rgb(33 40 60))`;
+  });
+</script>
